@@ -7,6 +7,7 @@ from src.ecs.systems.s_collision_player_enemy import system_collision_player_ene
 from src.ecs.systems.s_collision_enemy_bullet import system_collision_enemy_bullet
 
 from src.ecs.systems.s_enemy_spawner import system_enemy_spawner
+from src.ecs.systems.s_hunter_chase import system_hunter_chase
 from src.ecs.systems.s_input_player import system_input_player
 from src.ecs.systems.s_movement import system_movement
 from src.ecs.systems.s_player_state import system_player_state
@@ -94,6 +95,7 @@ class GameEngine:
 
         system_player_state(self.ecs_world)
         system_hunter_state(self.ecs_world)
+        system_hunter_chase(self.ecs_world)
 
         system_screen_bounce(self.ecs_world, self.screen)
         system_screen_player(self.ecs_world, self.screen)

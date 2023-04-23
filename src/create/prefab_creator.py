@@ -4,6 +4,7 @@ import esper
 from src.ecs.components.c_animation import CAnimation
 
 from src.ecs.components.c_enemy_spawner import CEnemySpawner
+from src.ecs.components.c_hunter_info import CHunterInfo
 from src.ecs.components.c_hunter_state import CHunterState
 from src.ecs.components.c_input_command import CInputCommand
 from src.ecs.components.c_player_state import CPlayerState
@@ -11,6 +12,7 @@ from src.ecs.components.c_surface import CSurface
 from src.ecs.components.c_transform import CTransform
 from src.ecs.components.c_velocity import CVelocity
 from src.ecs.components.tags.c_tag_enemy import CTagEnemy
+from src.ecs.components.tags.c_tag_hunter import CTagHunter
 from src.ecs.components.tags.c_tag_player import CTagPlayer
 from src.ecs.components.tags.c_tag_bullet import CTagBullet
 
@@ -56,7 +58,9 @@ def create_hunter_square(world: esper.World, pos: pygame.Vector2, hunter_info: d
     size = hunter_sprite.get_size()
     size = (size[0] / hunter_info["animations"]["number_frames"], size[1])
     hunter_entity = create_sprite(world, pos, vel, hunter_sprite)
-    world.add_component(hunter_entity, CTagEnemy())
+    init_pos = pygame.Vector2(pos.x, pos.y)
+    world.add_component(hunter_entity, CTagHunter())
+    world.add_component(hunter_entity, CHunterInfo(velocity_chase, velocity_return, distance_start_chase, dist_return, init_pos))
     world.add_component(hunter_entity, CAnimation(hunter_info["animations"]))
     world.add_component(hunter_entity, CHunterState())
     return hunter_entity
