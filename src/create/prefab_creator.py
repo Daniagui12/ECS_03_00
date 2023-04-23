@@ -4,6 +4,7 @@ import esper
 from src.ecs.components.c_animation import CAnimation
 
 from src.ecs.components.c_enemy_spawner import CEnemySpawner
+from src.ecs.components.c_hunter_state import CHunterState
 from src.ecs.components.c_input_command import CInputCommand
 from src.ecs.components.c_player_state import CPlayerState
 from src.ecs.components.c_surface import CSurface
@@ -57,6 +58,7 @@ def create_hunter_square(world: esper.World, pos: pygame.Vector2, hunter_info: d
     hunter_entity = create_sprite(world, pos, vel, hunter_sprite)
     world.add_component(hunter_entity, CTagEnemy())
     world.add_component(hunter_entity, CAnimation(hunter_info["animations"]))
+    world.add_component(hunter_entity, CHunterState())
     return hunter_entity
 
 
