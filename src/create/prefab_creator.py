@@ -45,17 +45,31 @@ def create_enemy_square(world: esper.World, pos: pygame.Vector2, enemy_info: dic
     enemy_entity = create_sprite(world, pos, velocity, enemy_surface)
     world.add_component(enemy_entity, CTagEnemy())
 
+def create_hunter_square(world: esper.World, pos: pygame.Vector2, hunter_info: dict):
+    hunter_sprite = pygame.image.load(hunter_info["image"]).convert_alpha()
+    velocity_chase = hunter_info["velocity_chase"]
+    velocity_return = hunter_info["velocity_return"]
+    distance_start_chase = hunter_info["distance_start_chase"]
+    dist_return = hunter_info["distance_start_return"]
+    vel = pygame.Vector2(0,0)
+    size = hunter_sprite.get_size()
+    size = (size[0] / hunter_info["animations"]["number_frames"], size[1])
+    hunter_entity = create_sprite(world, pos, vel, hunter_sprite)
+    world.add_component(hunter_entity, CTagEnemy())
+    world.add_component(hunter_entity, CAnimation(hunter_info["animations"]))
+    return hunter_entity
+
 
 def create_player_square(world: esper.World, player_info: dict, player_lvl_info: dict) -> int:
     player_sprite = pygame.image.load(player_info["image"]).convert_alpha()
     size = player_sprite.get_size()
-    size = (size[0] / player_info["animation"]["number_frames"], size[1])
+    size = (size[0] / player_info["animations"]["number_frames"], size[1])
     pos = pygame.Vector2(player_lvl_info["position"]["x"] - (size[0] / 2),
                          player_lvl_info["position"]["y"] - (size[0] / 2))
     vel = pygame.Vector2(0, 0)
     player_entity = create_sprite(world, pos, vel, player_sprite)
     world.add_component(player_entity, CTagPlayer())
-    world.add_component(player_entity, CAnimation(player_info["animation"]))
+    world.add_component(player_entity, CAnimation(player_info["animations"]))
     world.add_component(player_entity, CPlayerState())
     return player_entity
 
